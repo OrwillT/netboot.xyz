@@ -39,14 +39,23 @@ echo ${cls}
 goto boottype
 
 :boottype
+set ova ${os} ${osversion}
 menu ${os} ${arch} boot type
-item normal ${ova} install
+item graphical ${ova} graphical installer
+item text ${ova} text based installer
 item rescue ${ova} rescue
-item kickstart ${ova} specify kickstart url
-isset ${bt} || choose bt || goto fedora
+item kickstart ${ova} set kickstart url [ ${ksurl} ]
+item kickstart_device ${ova} set ksdevice [ ${ksdevice} ]
+isset ${bt} || choose bt || goto centos
 echo ${cls}
+iseq ${bt} text && goto text ||
 iseq ${bt} rescue && goto rescue ||
 iseq ${bt} kickstart && goto kickstart ||
+iseq ${bt} kickstart_device && goto kickstart_device ||
+goto boot
+
+:text
+set params text ||
 goto boot
 
 :rescue
