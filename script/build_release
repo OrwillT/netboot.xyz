@@ -11,7 +11,7 @@ DOCKER_FILE="Dockerfile-build.production"
 
 # Set boot domain
 if [[ "${TYPE}" == "dev" ]]; then
-  BOOT_DOMAIN="s3.amazonaws.com/${DEV_URL}/${$GITHUB_SHA}"
+  BOOT_DOMAIN="s3.amazonaws.com/${DEV_URL}/${GITHUB_SHA}"
   BOOT_VERSION="${GITHUB_SHA}"
 elif [[ "${TYPE}" == "pr" ]]; then
   BOOT_DOMAIN="test.com"
