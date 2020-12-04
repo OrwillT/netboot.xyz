@@ -5,6 +5,13 @@ on:
     branches:
       - development
 
+env:
+  AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_DEV }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  DISCORD_HOOK_URL: ${{ secrets.DISCORD_HOOK_URL }}
+  GITHUB_SHA: ${{ github.sha }}
+
 jobs:
   development-build:
     name: Build Development
@@ -28,9 +35,6 @@ jobs:
       with:
         args: --acl public-read --follow-symlinks
       env:
-        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_DEV }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         SOURCE_DIR: 's3out'
         DEST_DIR: '$GITHUB_SHA'
 
@@ -39,9 +43,6 @@ jobs:
       with:
         args: --acl public-read --follow-symlinks
       env:
-        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_DEV }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         SOURCE_DIR: 's3outver'
 
     - name: Notify Discord on failure
