@@ -21,10 +21,12 @@ jobs:
 
     - name: Retrieve Certs
       run: |
-        git clone https://${{ secrets.GIT_USER }}:${{ secrets.GIT_AUTH }}@${{ secrets.GIT_URL }} certs
-        cp certs/certs.tar.enc .
-        openssl aes-256-cbc -pass pass:${{ secrets.CERTS_KEY }} -d -salt -pbkdf2 -a -in certs.tar.enc -out certs.tar
-        tar xf certs.tar -C certs
+        ./script/retrieve_certs
+      env:
+        GIT_USER: ${{ secrets.GIT_USER }}
+        GIT_AUTH: ${{ secrets.GIT_AUTH }}
+        GIT_URL: ${{ secrets.GIT_URL }}
+        CERTS_KEY: ${{ secrets.CERTS_KEY }}
 
     - name: Build Development Release
       run: |
