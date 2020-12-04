@@ -14,7 +14,7 @@ jobs:
 
     - name: Retrieve Certs
       run: |
-        git clone https://${{ secrets.GIT_USER }}:${{ secrets.GIT_AUTH }}@${{ GIT_URL }} certs
+        git clone https://${{ secrets.GIT_USER }}:${{ secrets.GIT_AUTH }}@${{ secrets.GIT_URL }} certs
         cp certs/certs.tar.enc .
         openssl aes-256-cbc -pass pass:${{ secrets.CERTS_KEY }} -d -a -in certs.tar.enc -out certs.tar
         tar xf certs.tar -C certs
