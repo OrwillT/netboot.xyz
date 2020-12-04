@@ -16,7 +16,7 @@ jobs:
       run: |
         git clone https://${{ secrets.GIT_USER }}:${{ secrets.GIT_AUTH }}@${{ secrets.GIT_URL }} certs
         cp certs/certs.tar.enc .
-        openssl aes-256-cbc -pass pass:${{ secrets.CERTS_KEY }} -d -a -in certs.tar.enc -out certs.tar
+        openssl aes-256-cbc -pass pass:${{ secrets.CERTS_KEY }} -d -salt -pbkdf2 -a -in certs.tar.enc -out certs.tar
         tar xf certs.tar -C certs
 
     - name: Build Development Release
